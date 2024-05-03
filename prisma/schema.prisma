@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Models
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  segments  Segment[]
+
+  @@map("categories")
+}
+
+model Segment {
+  id            Int       @id @default(autoincrement())
+  categoryId    Int       @map("category_id")
+  category      Category  @relation(fields: [categoryId], references: [id])
+  name          String    @unique
+  createdAt     DateTime  @default(now())@map("created_at")
+  updatedAt     DateTime  @updatedAt@map("updated_at")
+  parts         Part[]
+
+  @@map("segments")
+  @@index([categoryId])
+}
+
+model Brand {
+  id    Int     @id @default(autoincrement())
+  name  String  @unique
+  parts Part[]
+
+  @@map("brands")
+}
+
+model Part {
+  id              Int       @id @default(autoincrement())
+  segmentId       Int       @map("segment_id")
+  segment         Segment   @relation(fields: [segmentId], references: [id])
+  brandId         Int       @map("brand_id")
+  brand           Brand     @relation(fields: [brandId], references: [id])
+  name            String    @unique
+  uom             uom
+  isSerialNumber  Boolean   @map("is_serial_number")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@map("parts")
+  @@index([segmentId, brandId])
+}
+
+enum uom {
+  BALL
+  BATANG
+  EACH
+  KALENG
+  KG
+  KUBIC
+  LEMBAR
+  LITER
+  METER
+  PACK
+  PAKET
+  PAIR
+  ROLL
+  SAK
+  SET
+  UNIT
+  ZAK
+}

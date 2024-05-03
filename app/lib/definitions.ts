@@ -4,25 +4,25 @@
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 
 export type Category = {
-    id: string;
+    id: number;
     name: string;
 }
 
 export type Segment = {
-    id: string;
-    category_id: string;
+    id: number;
+    category_id: number;
     name: string;
 }
 
 export type Brand = {
-    id: string;
+    id: number;
     name: string;
 }
 
 export type Part = {
-    id: string;
-    segment_id: string;
-    brand_id: string;
+    id: number;
+    segment_id: number;
+    brand_id: number;
     name: string;
     uom: string;
     is_serial_number: boolean;
