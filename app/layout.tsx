@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
@@ -9,14 +9,16 @@ export const metadata: Metadata = {
   description: "An alternative inventory management system.",
 };
 
-export default function RootLayout({
+function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className="font-mono antialiased">{children}</body>
+      <body className="font-mono antialiased" suppressHydrationWarning={true}>{children}</body>
     </html>
   );
 }
+
+export default RootLayout;

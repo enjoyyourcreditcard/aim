@@ -1,20 +1,50 @@
-import { Metadata } from "next";
-import MobileSideNav from "../ui/mobileNavSide";
-import NavSide from "../ui/navSide";
 import Image from "next/image";
-import Pagination from '../ui/pagination';
-import Table from '../ui/table';
-import Search from '../ui/search';
+import NavSide from "../ui/navSide";
+import MobileSideNav from "../ui/mobileNavSide";
 
-export const metadata: Metadata = {
-    title: 'Segment'
-};
+const links = [
+    {
+        name: `Master`,
+        href: ``,
+        children: [
+            {
+                name: `Category`,
+                href: `/dashboard/master/category`,
+            },
+            {
+                name: `Segment`,
+                href: `/dashboard/master/segment`
+            },
+            {
+                name: `Part`,
+                href: `/dashboard/master/part`
+            },
+            {
+                name: `Brand`,
+                href: `/dashboard/master/brand`
+            },
+        ]
+    }, {
+        name: `Transaction`,
+        href: `/transaction`,
+        children: [
+            {
+                name: `Transfer`,
+                href: `/transfer`
+            },
+            {
+                name: `Purchase`,
+                href: `/purchase`
+            }
+        ]
+    }
+];
 
-function Page() {
+function Layout({ children }: { children: React.ReactNode }) {
     return (
         <main className="flex w-screen">
             <div className="hidden md:block min-w-80 w-2/12">
-                <NavSide />
+                <NavSide links={links} />
             </div>
             <div className="w-full md:w-10/12">
                 <div className="flex flex-col">
@@ -33,17 +63,11 @@ function Page() {
                             </h1>
                         </div>
                         <div className="w-full p-5 border-b border-neutral-700 md:hidden">
-                            <MobileSideNav />
+                            <MobileSideNav links={links} />
                         </div>
                     </div>
                     <div className="p-5">
-                        <Search />
-                        <div className="mt-4">
-                            <Table />
-                        </div>
-                        <div className="mt-4">
-                            <Pagination />
-                        </div>
+                        {children}
                     </div>
                 </div>
             </div>
@@ -51,4 +75,4 @@ function Page() {
     );
 }
 
-export default Page;
+export default Layout;

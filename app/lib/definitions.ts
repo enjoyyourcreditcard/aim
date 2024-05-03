@@ -27,3 +27,12 @@ export type Part = {
     uom: string;
     is_serial_number: boolean;
 }
+
+export type TypeLink = {
+    name: string;
+    href: string;
+    children?: {
+        name: string;
+        href: string;
+    }[];
+}
